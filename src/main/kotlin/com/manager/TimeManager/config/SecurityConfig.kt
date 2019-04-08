@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
 @EnableWebSecurity
@@ -15,7 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 class SecurityConfig(val customUserDetailsService: CustomUserDetailsService) : WebSecurityConfigurerAdapter()  {
 
     override fun configure(security: HttpSecurity) {
-        security.cors()
+        security.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                .and()
+                .cors()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()

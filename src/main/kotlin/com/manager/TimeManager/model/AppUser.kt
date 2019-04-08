@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank
 @Table(name = "users")
 class AppUser(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Int? = null,
 
         @Column(nullable = false, unique = true, length = 46)

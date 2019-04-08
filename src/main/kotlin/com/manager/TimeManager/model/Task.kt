@@ -1,5 +1,8 @@
 package com.manager.TimeManager.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.manager.TimeManager.facade.AuthFacade
+import org.springframework.format.annotation.DateTimeFormat
 import java.util.Date
 import javax.persistence.*
 
@@ -7,13 +10,15 @@ import javax.persistence.*
 @Table(name = "tasks")
 class Task (
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Int,
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        val id: Int? = null,
 
         @Column(name = "start_date", nullable = false)
-        var startDate: Date,
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        val startDate: Date,
 
         @Column(name = "end_date", nullable = false)
+        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         val endDate: Date,
 
         @Column
@@ -24,5 +29,9 @@ class Task (
 
         @ManyToOne
         @JoinColumn
-        var user: AppUser
+        @JsonIgnore
+        var user: AppUser = AuthFacade.user(),
+
+        @OneToOne(mappedBy = "task")
+        var notification: Notification? = null
 )

@@ -1,6 +1,7 @@
 package com.manager.TimeManager.service
 
 import com.manager.TimeManager.model.AppUser
+import com.manager.TimeManager.repository.AppUserRepository
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service
-class CustomUserDetailsService(val appUserService: AppUserService) : UserDetailsService {
+class CustomUserDetailsService(val appUserRepository: AppUserRepository) : UserDetailsService {
 
     override fun loadUserByUsername(username: String): UserDetails {
         val appUser = loadAppUserByUsername(username)
@@ -17,7 +18,7 @@ class CustomUserDetailsService(val appUserService: AppUserService) : UserDetails
     }
 
     fun loadAppUserByUsername(username: String) : AppUser? {
-        return appUserService.findUserByUsername(username)
+        return appUserRepository.findByUsername(username)
     }
 
 }

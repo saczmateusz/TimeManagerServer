@@ -1,11 +1,11 @@
 package com.manager.TimeManager.controller
 
 import com.manager.TimeManager.model.AppUser
-import com.manager.TimeManager.service.AppUserService
+import com.manager.TimeManager.repository.AppUserRepository
 import com.manager.TimeManager.service.AuthService
-import jdk.incubator.http.HttpResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 
 @RestController
-class AuthController(val authService: AuthService, val appUserService: AppUserService) {
+class AuthController(val authService: AuthService, val appUserRepository: AppUserRepository) {
 
     @PostMapping("/auth/login")
     fun login(@RequestParam username: String?, @RequestParam password: String?) : ResponseEntity<HashMap<String, String>> {
@@ -30,7 +30,8 @@ class AuthController(val authService: AuthService, val appUserService: AppUserSe
         val user: AppUser?
 
         try {
-            user = appUserService.insertUser(newUser)
+            newUser.password = BCryptPasswordEncoder().encode(newUser.password)
+            user = appUserRepository.save(newUser)
         }
         catch (e: Exception) {
             return ResponseEntity(e.message, HttpStatus.FORBIDDEN)

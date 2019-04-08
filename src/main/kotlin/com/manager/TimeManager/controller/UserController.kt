@@ -2,20 +2,17 @@ package com.manager.TimeManager.controller
 
 import com.manager.TimeManager.facade.AuthFacade
 import com.manager.TimeManager.model.AppUser
-import com.manager.TimeManager.service.AppUserService
+import com.manager.TimeManager.repository.AppUserRepository
 import org.springframework.web.bind.annotation.*
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.transaction.annotation.Transactional
 
 
 @RestController
 @RequestMapping("/api/user")
-@Transactional
-class UserController(val appUserService: AppUserService)
+class UserController(val appUserRepository: AppUserRepository)
 {
     @GetMapping
-    fun getUser() : AppUser? {
-        /* idk about this and authfacade.user() xD */
-        return appUserService.findUserByUsername(AuthFacade.user().username)
+    fun index() : AppUser? {
+        /* the user object saved in AuthFacade doesn't have eager loaded tasks, so we need to query the DB again */
+        return appUserRepository.findByUsername(AuthFacade.user().username)
     }
 }
