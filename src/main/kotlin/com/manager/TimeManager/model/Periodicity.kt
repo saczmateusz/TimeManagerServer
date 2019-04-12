@@ -1,23 +1,20 @@
 package com.manager.TimeManager.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.Positive
-import javax.validation.constraints.PositiveOrZero
 
 @Entity
-@Table(name = "notifications")
-class Notification(
+class Periodicity(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Int? = null,
 
         @field:Positive
-        @Column(name = "hours_before", nullable = false)
-        @JsonProperty("hours_before")
-        val hoursBefore: Int? = null,
+        val frequency: Int? = null,
+
+        @field:Positive
+        val repeats: Int? = null,
 
         @OneToOne
         @JoinColumn

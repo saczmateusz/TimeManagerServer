@@ -14,7 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfig(val customUserDetailsService: CustomUserDetailsService) : WebSecurityConfigurerAdapter()  {
-
+    @Override
     override fun configure(security: HttpSecurity) {
         security.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()

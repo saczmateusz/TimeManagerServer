@@ -6,18 +6,16 @@ import com.manager.TimeManager.service.AuthService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 
 @RestController
 class AuthController(val authService: AuthService, val appUserRepository: AppUserRepository) {
 
     @PostMapping("/auth/login")
-    fun login(@RequestParam username: String?, @RequestParam password: String?) : ResponseEntity<HashMap<String, String>> {
-        val user = authService.attemptLogin(username, password)
+    fun login(@RequestBody input: Map<String, String?>) : ResponseEntity<HashMap<String, String>> {
+        val user = authService.attemptLogin(input["username"], input["password"])
 
         user ?: return ResponseEntity(hashMapOf("error" to "Bad credentials"), HttpStatus.UNAUTHORIZED)
 
@@ -26,7 +24,7 @@ class AuthController(val authService: AuthService, val appUserRepository: AppUse
     }
 
     @PostMapping("/auth/register")
-    fun register(@ModelAttribute newUser : AppUser) : ResponseEntity<Any> {
+    fun register(@Valid @RequestBody newUser : AppUser) : ResponseEntity<Any> {
         val user: AppUser?
 
         try {
