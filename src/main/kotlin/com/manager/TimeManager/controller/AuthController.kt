@@ -40,7 +40,7 @@ class AuthController(val authService: AuthService, val appUserRepository: AppUse
             return ResponseEntity(e.message, HttpStatus.FORBIDDEN)
         }
 
-        return ResponseEntity(user, HttpStatus.OK)
+        return ResponseEntity(hashMapOf("user" to user, "token" to authService.makeTokenForUser(user)), HttpStatus.OK)
 
     }
 }
