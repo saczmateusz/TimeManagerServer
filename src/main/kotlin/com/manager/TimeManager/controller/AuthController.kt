@@ -13,6 +13,11 @@ import javax.validation.Valid
 @RestController
 class AuthController(val authService: AuthService, val appUserRepository: AppUserRepository) {
 
+    @GetMapping("/auth/users")
+    fun all() : List<AppUser> {
+        return appUserRepository.findAll()
+    }
+
     @PostMapping("/auth/login")
     fun login(@RequestBody input: Map<String, String?>) : ResponseEntity<HashMap<String, String>> {
         val user = authService.attemptLogin(input["username"], input["password"])
