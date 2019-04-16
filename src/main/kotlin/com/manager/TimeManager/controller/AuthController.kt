@@ -19,13 +19,13 @@ class AuthController(val authService: AuthService, val appUserRepository: AppUse
     }
 
     @PostMapping("/auth/login")
-    fun login(@RequestBody input: Map<String, String?>) : ResponseEntity<HashMap<String, String>> {
+    fun login(@RequestBody input: Map<String, String?>) : ResponseEntity<Any> {
         val user = authService.attemptLogin(input["username"], input["password"])
 
         user ?: return ResponseEntity(hashMapOf("error" to "Bad credentials"), HttpStatus.UNAUTHORIZED)
 
         val token = authService.makeTokenForUser(user)
-        return ResponseEntity(hashMapOf("token" to token), HttpStatus.OK)
+        return ResponseEntity(hashMapOf("user" to user, "token" to token), HttpStatus.OK)
     }
 
     @PostMapping("/auth/register")
