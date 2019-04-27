@@ -1,5 +1,6 @@
 package com.manager.TimeManager.model
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.manager.TimeManager.facade.AuthFacade
@@ -18,12 +19,12 @@ class Task (
         val id: Int? = null,
 
         @Column(name = "start_date", nullable = false)
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonProperty("start_date")
         val startDate: Date? = null,
 
         @Column(name = "end_date", nullable = false)
-        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         @JsonProperty("end_date")
         val endDate: Date? = null,
 
