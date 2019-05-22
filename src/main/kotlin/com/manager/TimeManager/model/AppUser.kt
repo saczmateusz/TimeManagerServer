@@ -29,5 +29,5 @@ class AppUser(
         val email: String? = null,
 
         @OneToMany(mappedBy = "user")
-        val tasks: List<Task>? = null
+        var tasks: List<Task>? = null
 )

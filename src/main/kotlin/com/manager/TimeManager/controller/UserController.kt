@@ -12,6 +12,8 @@ class UserController(val appUserRepository: AppUserRepository)
 {
     @GetMapping
     fun index() : AppUser? {
-        return appUserRepository.findByUsername(AuthFacade.user().username.orEmpty())
+        val user = appUserRepository.findByUsername(AuthFacade.user().username.orEmpty())
+        user?.tasks = user?.tasks?.sortedWith(compareByDescending { it.priority })
+        return user
     }
 }
