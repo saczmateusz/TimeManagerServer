@@ -34,8 +34,8 @@ class TaskController(val taskRepository: TaskRepository) {
     }
 
     /*
-    @PutMapping("{id}")
-    fun update(@RequestBody task: Task) : Task? {
+    @PatchMapping("{id}")
+    fun update(@PathVariable id: Int, @RequestBody data: HashMap<String, String>) : Task? {
         return taskRepository.save(task)
     }
     */
