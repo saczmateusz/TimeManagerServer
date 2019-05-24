@@ -33,6 +33,19 @@ class TaskController(val taskRepository: TaskRepository) {
         return true
     }
 
+    @PostMapping("{id}/archive")
+    fun archive(@PathVariable id: Int) : Boolean {
+        val task: Task? = taskRepository.findById(id).orElse(null)
+
+        if(task == null || task.user?.id != AuthFacade.user().id)
+            return false
+
+        task.isArchived = true
+        taskRepository.save(task)
+        return true
+
+    }
+
     /*
     @PutMapping("{id}")
     fun update(@RequestBody task: Task) : Task? {

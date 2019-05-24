@@ -34,6 +34,8 @@ class Task (
         @Column(nullable = false)
         var priority: Int? = null,
 
+        var isArchived: Boolean? = false,
+
         @ManyToOne
         @JoinColumn
         @JsonIgnore
