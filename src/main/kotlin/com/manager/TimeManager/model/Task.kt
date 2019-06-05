@@ -45,6 +45,8 @@ class Task (
         val notification: Notification? = null,
 
         /* XDDD */
+        @Column(name = "has_notification")
+        @JsonProperty("has_notification")
         var hasNotification: Boolean? = null,
 
         @OneToOne(mappedBy = "task")
