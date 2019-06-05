@@ -44,6 +44,9 @@ class Task (
         @OneToOne(mappedBy = "task")
         val notification: Notification? = null,
 
+        /* XDDD */
+        var hasNotification: Boolean? = null,
+
         @OneToOne(mappedBy = "task")
         val periodicity: Periodicity? = null
 )
